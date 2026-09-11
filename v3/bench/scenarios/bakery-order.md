@@ -88,51 +88,75 @@ subscores separately so the overlap is visible.
 
 ## Result: Experiment A, run 2026-09-11
 
-One realistic requirements document (`bakery-requirements.md`, 7 FR + 2 NFR,
-written without reference to either rule set) fed to both checkers.
+Artifacts held constant. One realistic requirements document (7 FR + 2 NFR,
+`bakery-requirements.md`, written without reference to either rule set) fed to
+both checkers. Raw data in `run-2026-09-11/`.
 
-Independent ground truth: **one material defect** — FR-3 ("the order form
-should be easy for customers to use on a phone", acceptance "the form is
-usable on mobile") states a goal, not an observable condition. Everything else
-in the document is sound.
+**Ground truth and triage both came from fresh-context subagents**, not from
+whoever authored the rules. The reviewer saw only the original prompt and the
+document — no rule sets, no findings. The adjudicator saw the document and all
+34 raises pooled together, and was not told which system produced which.
 
-| | v2 `claim-sources` | v3 `check --gate exit --phase inception` |
+The independent reviewer found **7 material defects**:
+
+| | affects | |
 |---|---|---|
-| findings | **28** | **6** |
-| caught the real defect | not distinguishably | yes (`requirements/testable` FR-3) |
-| blocking | 0 (sensor is advisory) | 0 |
-| precision (strict) | ~4% | ~33% |
+| D1 | FR-3 | "easy to use on a phone" is circular; no checkable bar |
+| D2 | FR-6 | staff order list has no auth requirement; the straightforward build leaks customer name and phone on an open URL, contradicting NFR-2 |
+| D3 | FR-5 | order line items, quantities and prices-at-submission never stated as persisted |
+| D4 | FR-7 | only time-of-day constrained; no pickup date window, no prep lead time |
+| D5 | FR-6 | "current day" ambiguous between submitted-today and pickup-today |
+| D6 | FR-1 | nothing defines how the daily availability flag gets set |
+| D7 | FR-2 | no server-side revalidation that basket items still exist; quantity unbounded |
 
-v2's 28 were format-conformance failures on a substantively good document,
-including several that are simply wrong: `[desc] is not registered in ##
-Sources` when it is registered; `[Q1] has no filled answer` when the questions
-file carries `[Answer]:`; and `[scope] is valid only in ## Initial Scope
-Signal`, a section the framework never asked the author to create.
+Scored by `bench/score.ts`:
 
-v3's 6 break down as 1 clear true positive (FR-3 untestable), 1 defensible
-(FR-3 unsourced), and 4 false positives — three source-tag findings on
-requirements that are reasonable derivations, and one `requirements/testable`
-on NFR-2, which is testable but not phrased as given/when/then.
+```
+  system  raised  signal  noise  miss  prec(raw)  prec(triaged)  recall
+  v2      28      0       28     7     0%         0%             0%
+  v3      6       2       4      6     33%        67%            14%
+```
 
-**v3 is better here, not good.** Both systems fail the same way — a
-deterministic marker standing in for a judgment — v3 simply at one sixth the
-volume. Closing the remaining gap is the judgment tier's job, and the stub
-triage confirms everything it is handed, so the funnel is not yet doing any
-work. Wiring a real model to `--judge model` is the next experiment.
+The adjudicator confirmed 3 of 34 raises — all three from v3, none from v2.
+Its dismissals of v2 were mostly factual: `[desc]` and `[scope]` *are*
+registered in `## Sources`; `[Q1]` *is* answered; the scope entry *is* labelled
+workflow-selected. One v3 raise (NFR-2) the adjudicator confirmed but the
+reviewer had not listed as material, so the scorer counts it as noise — a real
+disagreement between two independent judges, left visible rather than resolved.
 
-### Bugs this scenario found in v3
+### The finding that matters
 
-Running one realistic document surfaced three defects a synthetic corpus had
-not:
+v3 beats v2 on every column, and **both lose the argument**. Between them the
+two systems raised 34 findings and caught **one** of seven material defects.
+D2 alone is a customer-PII leak that ships.
+
+Neither system has any path to D2–D7, because they are not properties of the
+document's form — they are domain reasoning about what the document does not
+say. This is a direct challenge to the design in
+`docs/` §"Design": anchoring judgment rules to deterministic raises, borrowed
+from Semgrep, is a good rule for **precision** and a bad rule for **recall**.
+Nothing deterministic points at "the staff list has no auth". At least one rule
+has to be an open-ended reviewer pass over the artifact against the plan's
+questions — closer to v2's reviewer agent than to a linter.
+
+Cheapness is not the interesting result. 10x smaller than v2 matters much less
+than 1-of-7.
+
+### Bugs this scenario found
+
+In v3, from running one realistic document rather than a synthetic corpus:
 
 1. `phase` was loaded on every rule and never used to filter, so construction
-   rules fired at an inception gate ("no traceability yet" reported as a
-   defect during requirements).
-2. `requirements/testable` markers missed the given/when/then form entirely.
-3. Markers ran without the dotall flag, so a **line-wrapped** acceptance
-   criterion read as an absent one — the same failure class as v2's "a
-   thematic break voids the summary receipt."
+   rules fired at an inception gate.
+2. `requirements/testable` markers missed the given/when/then form.
+3. Markers matched without the dotall flag, so a **line-wrapped** acceptance
+   criterion read as an absent one — v2's "a thematic break voids the summary
+   receipt" failure class, reproduced in miniature. No regex tuning removes
+   this; it is the standing argument for a real judgment tier.
 
-The third is the instructive one: it is v2's disease reproduced in miniature,
-and no amount of regex tuning removes it. It is the standing argument for why
-the judgment tier has to be real rather than a stub.
+In the measurement apparatus itself:
+
+4. `score.ts` matched defect targets by substring, so `NFR-2` matched defect
+   `FR-2` and inflated v3's recall from 14% to 29%. The bug favoured the
+   system its author wrote. Fixed to word-bounded matching — and a reminder
+   that the scorer needs the same scrutiny as the thing it scores.

@@ -1,0 +1,282 @@
+{
+  "requests": [
+    {
+      "id": "claims/have-sources|aidlc-docs/requirements.md:25",
+      "rule": "claims/have-sources",
+      "principle": "A claim traces to something the team actually consulted: the initial description, the selected scope, an answered question, or a named source.",
+      "where": "aidlc-docs/requirements.md:25",
+      "detail": "FR-3 has no source tag",
+      "excerpt": "- **FR-3**: The order form should be easy for customers to use on a phone.\n  - Acceptance: the form is usable on mobile.",
+      "system": "v3"
+    },
+    {
+      "id": "claims/have-sources|aidlc-docs/requirements.md:27",
+      "rule": "claims/have-sources",
+      "principle": "A claim traces to something the team actually consulted: the initial description, the selected scope, an answered question, or a named source.",
+      "where": "aidlc-docs/requirements.md:27",
+      "detail": "FR-4 has no source tag",
+      "excerpt": "- **FR-4**: Order submission must reject a basket with no items.\n  - Acceptance: given an empty basket, when the visitor submits, then the\n    request returns 400 and no order is created.",
+      "system": "v3"
+    },
+    {
+      "id": "claims/have-sources|aidlc-docs/requirements.md:30",
+      "rule": "claims/have-sources",
+      "principle": "A claim traces to something the team actually consulted: the initial description, the selected scope, an answered question, or a named source.",
+      "where": "aidlc-docs/requirements.md:30",
+      "detail": "FR-5 has no source tag",
+      "excerpt": "- **FR-5**: Submitting an order must capture the customer name, phone number\n  and requested pickup time, and must persist the order with status `received`.\n  - Acceptance: given a valid basket and contact details, when the visitor\n    submits, then an order row exists with status `received` and the submitted\n    pickup time.",
+      "system": "v3"
+    },
+    {
+      "id": "claims/have-sources|aidlc-docs/requirements.md:49",
+      "rule": "claims/have-sources",
+      "principle": "A claim traces to something the team actually consulted: the initial description, the selected scope, an answered question, or a named source.",
+      "where": "aidlc-docs/requirements.md:49",
+      "detail": "NFR-2 has no source tag",
+      "excerpt": "- **NFR-2**: Customer phone numbers must not appear in application logs.\n  - Acceptance: a submitted order produces no log line containing the phone\n    number.\n",
+      "system": "v3"
+    },
+    {
+      "id": "requirements/testable|aidlc-docs/requirements.md:25",
+      "rule": "requirements/testable",
+      "principle": "A requirement should describe an observable condition rather than a goal. \"Fast login\" is a goal; \"login responds within 500ms at p95\" is testable.",
+      "where": "aidlc-docs/requirements.md:25",
+      "detail": "FR-3 has no observable condition",
+      "excerpt": "- **FR-3**: The order form should be easy for customers to use on a phone.\n  - Acceptance: the form is usable on mobile.",
+      "system": "v3"
+    },
+    {
+      "id": "requirements/testable|aidlc-docs/requirements.md:49",
+      "rule": "requirements/testable",
+      "principle": "A requirement should describe an observable condition rather than a goal. \"Fast login\" is a goal; \"login responds within 500ms at p95\" is testable.",
+      "where": "aidlc-docs/requirements.md:49",
+      "detail": "NFR-2 has no observable condition",
+      "excerpt": "- **NFR-2**: Customer phone numbers must not appear in application logs.\n  - Acceptance: a submitted order produces no log line containing the phone\n    number.\n",
+      "system": "v3"
+    },
+    {
+      "id": "v2-0",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "questions file is missing ## Sources"
+    },
+    {
+      "id": "v2-1",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Sources: [desc] is not registered in ## Sources"
+    },
+    {
+      "id": "v2-2",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Sources: [scope] is not registered in ## Sources"
+    },
+    {
+      "id": "v2-3",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Sources: [scope] is valid only in ## Initial Scope Signal"
+    },
+    {
+      "id": "v2-4",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Overview: claim block has no source tag"
+    },
+    {
+      "id": "v2-5",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [desc] is not registered in ## Sources"
+    },
+    {
+      "id": "v2-6",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-7",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [desc] is not registered in ## Sources"
+    },
+    {
+      "id": "v2-8",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-9",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-10",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-11",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-12",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-13",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-14",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-15",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [scope] is not registered in ## Sources"
+    },
+    {
+      "id": "v2-16",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [scope] is valid only in ## Initial Scope Signal"
+    },
+    {
+      "id": "v2-17",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [scope] claim is not labeled workflow-selected"
+    },
+    {
+      "id": "v2-18",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-19",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: [Q1] has no filled answer"
+    },
+    {
+      "id": "v2-20",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-21",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Non-Functional Requirements: [assumption] is outside ## Assumptions & Open Questions"
+    },
+    {
+      "id": "v2-22",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Non-Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-23",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Non-Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-24",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Non-Functional Requirements: claim block has no source tag"
+    },
+    {
+      "id": "v2-25",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Assumptions & Open Questions: assumption/open question lacks [assumption]"
+    },
+    {
+      "id": "v2-26",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "requirements.md ## Assumptions & Open Questions: [Q1] has no filled answer"
+    },
+    {
+      "id": "v2-27",
+      "system": "v2",
+      "rule": "aidlc-claim-sources",
+      "where": "requirements.md",
+      "principle": "Every claim in a stage artifact carries a source tag that resolves to the stage's confirmed source register.",
+      "detail": "retained assumptions require an answered ## Assumption Confirmation with Accept assumptions"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "verdicts": {
+    "claims/have-sources|aidlc-docs/requirements.md:25": {
+      "verdict": "confirmed",
+      "confidence": 0.75,
+      "note": "FR-3 genuinely carries no tag and, unlike the other untagged items, its content is not implied by the registered description or scope, so its provenance is unknown."
+    },
+    "claims/have-sources|aidlc-docs/requirements.md:27": {
+      "verdict": "dismissed",
+      "confidence": 0.6,
+      "note": "FR-4 is untagged but is a direct consequence of the registered [desc] order-submission behavior; the missing tag is bookkeeping, not lost provenance."
+    },
+    "claims/have-sources|aidlc-docs/requirements.md:30": {
+      "verdict": "dismissed",
+      "confidence": 0.6,
+      "note": "FR-5 restates the core submit-an-order behavior already registered under [desc]; the absent tag is notation rather than an untraceable claim."
+    },
+    "claims/have-sources|aidlc-docs/requirements.md:49": {
+      "verdict": "confirmed",
+      "confidence": 0.55,
+      "note": "NFR-2 introduces a privacy/logging constraint traceable to nothing in the document, and its sibling NFR-1 is tagged [assumption], so the omission hides a real unstated basis."
+    },
+    "requirements/testable|aidlc-docs/requirements.md:25": {
+      "verdict": "confirmed",
+      "confidence": 0.95,
+      "note": "\"easy to use on a phone\" with acceptance \"the form is usable on mobile\" states a goal with no observable condition."
+    },
+    "requirements/testable|aidlc-docs/requirements.md:49": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "NFR-2's acceptance criterion — no log line containing the phone number — is directly observable and testable."
+    },
+    "v2-0": {
+      "verdict": "dismissed",
+      "confidence": 0.8,
+      "note": "The document under review has a ## Sources section at line 3; the finding refers to some other questions file not present here."
+    },
+    "v2-1": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "[desc] is registered in ## Sources on line 5."
+    },
+    "v2-2": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "[scope] is registered in ## Sources on line 6."
+    },
+    "v2-3": {
+      "verdict": "dismissed",
+      "confidence": 0.9,
+      "note": "A required heading name for the scope entry is a template preference; the scope selection itself is stated plainly."
+    },
+    "v2-4": {
+      "verdict": "dismissed",
+      "confidence": 0.75,
+      "note": "The Overview is a narrative summary of the registered description and scope, not an untraceable claim."
+    },
+    "v2-5": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "[desc] is registered in ## Sources; the claim it is unregistered is false."
+    },
+    "v2-6": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Untargeted repeat of 'no source tag' across a section where FR-1, FR-2, FR-6 and FR-7 all carry tags; acceptance sub-bullets do not need their own tags."
+    },
+    "v2-7": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "[desc] is registered in ## Sources on line 5."
+    },
+    "v2-8": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Another unattributable duplicate of the same generic complaint in a section whose requirements are mostly tagged."
+    },
+    "v2-9": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Duplicate generic 'no source tag' with no location; over-fires well beyond the three untagged requirements that actually exist."
+    },
+    "v2-10": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Same untargeted repeat; the real untagged items are already identified precisely elsewhere."
+    },
+    "v2-11": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Generic repeat with no location; the section contains only seven requirements, four of them tagged."
+    },
+    "v2-12": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Unattributable duplicate of the same 'no source tag' message."
+    },
+    "v2-13": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Unattributable duplicate; appears to count acceptance sub-bullets as separate claim blocks."
+    },
+    "v2-14": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Unattributable duplicate of the same generic complaint."
+    },
+    "v2-15": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "[scope] is registered in ## Sources on line 6, so FR-6's tag resolves."
+    },
+    "v2-16": {
+      "verdict": "dismissed",
+      "confidence": 0.9,
+      "note": "Restricting [scope] to a particular heading is a notation rule; the scope basis for FR-6 is clear."
+    },
+    "v2-17": {
+      "verdict": "dismissed",
+      "confidence": 0.9,
+      "note": "Line 6 reads 'Workflow-selected scope: express [scope]' — the label the finding says is missing is present."
+    },
+    "v2-18": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Another locationless duplicate of the 'no source tag' complaint."
+    },
+    "v2-19": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "Line 58 supplies Q1's answer: opening hours fixed at 07:00-15:00, confirmed with the owner."
+    },
+    "v2-20": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Unattributable duplicate of the same generic source-tag message."
+    },
+    "v2-21": {
+      "verdict": "dismissed",
+      "confidence": 0.85,
+      "note": "NFR-1's [assumption] tag marks the basis of the performance target; requiring the tag to appear only inside the assumptions section is a notation preference."
+    },
+    "v2-22": {
+      "verdict": "dismissed",
+      "confidence": 0.55,
+      "note": "Three identical locationless findings for two NFRs, one of which is tagged; the one genuine gap (NFR-2) is reported precisely elsewhere."
+    },
+    "v2-23": {
+      "verdict": "dismissed",
+      "confidence": 0.55,
+      "note": "Duplicate of the same untargeted NFR complaint; over-fires relative to the two requirements in the section."
+    },
+    "v2-24": {
+      "verdict": "dismissed",
+      "confidence": 0.55,
+      "note": "Third copy of the same generic message for a two-requirement section; not independently verifiable."
+    },
+    "v2-25": {
+      "verdict": "dismissed",
+      "confidence": 0.8,
+      "note": "The untagged bullet in that section is the answered Q1, which is a confirmed answer rather than an assumption, so no [assumption] tag is warranted."
+    },
+    "v2-26": {
+      "verdict": "dismissed",
+      "confidence": 0.95,
+      "note": "Q1's answer is filled in on line 58; the claim is false."
+    },
+    "v2-27": {
+      "verdict": "dismissed",
+      "confidence": 0.7,
+      "note": "Demands a specific confirmation section/checkbox ritual; the assumptions themselves are listed explicitly and the owner-confirmed item is marked as such."
+    }
+  }
+}

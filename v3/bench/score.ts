@@ -30,12 +30,14 @@ const verdicts: Record<string, Verdict> = JSON.parse(readFileSync(verPath, "utf8
 
 const material = truth.filter((d) => d.severity === "MATERIAL");
 
-/** A raise covers a defect when it names the same requirement or section. */
+/** A raise covers a defect when it names the same requirement or section.
+ *  Word-bounded: a naive substring match makes "NFR-2" match defect "FR-2",
+ *  which silently inflates recall. */
 function covers(r: Request, d: Defect): boolean {
   const hay = `${r.where} ${r.detail}`.toUpperCase();
   const t = d.target.toUpperCase();
   if (t === "DOCUMENT-WIDE") return false;
-  return hay.includes(t);
+  return new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(hay);
 }
 
 const systems = [...new Set(requests.map((r) => r.system))].sort();

@@ -1,0 +1,13 @@
+{
+  "source": "independent reviewer subagent, fresh context, saw only the original prompt and the document",
+  "defects": [
+    { "id": "D1", "target": "FR-3", "severity": "MATERIAL", "summary": "\"easy to use on a phone\" / \"usable on mobile\" is circular; no checkable bar" },
+    { "id": "D2", "target": "FR-6", "severity": "MATERIAL", "summary": "staff order list has no auth requirement; the straightforward build leaks customer name+phone on an open URL, contradicting NFR-2" },
+    { "id": "D3", "target": "FR-5", "severity": "MATERIAL", "summary": "order line items, quantities and prices-at-submission are never stated as persisted" },
+    { "id": "D4", "target": "FR-7", "severity": "MATERIAL", "summary": "only time-of-day constrained; no valid pickup date window and no prep lead time" },
+    { "id": "D5", "target": "FR-6", "severity": "MATERIAL", "summary": "\"current day\" is ambiguous between submitted-today and pickup-today" },
+    { "id": "D6", "target": "FR-1", "severity": "MATERIAL", "summary": "nothing defines how the daily availability flag gets set" },
+    { "id": "D7", "target": "FR-2", "severity": "MATERIAL", "summary": "no server-side revalidation that basket items still exist; quantity unbounded" },
+    { "id": "D8", "target": "FR-5", "severity": "MINOR", "summary": "no order reference returned; no status beyond received" }
+  ]
+}
