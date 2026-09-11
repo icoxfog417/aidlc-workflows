@@ -1,0 +1,15 @@
+id: requirements/exists
+kind: deterministic
+phase: [inception]
+checkpoint: exit
+substrate: [ledger, artifacts]
+check: ledger.stage_without_artifact
+params:
+  stage: requirements
+  artifact: requirements.md
+principle: >
+  A completed requirements step normally leaves requirements behind. Absence
+  is reported, never refused: a step that legitimately produces nothing is a
+  state, not a violation.
+severity: warn
+fix: none

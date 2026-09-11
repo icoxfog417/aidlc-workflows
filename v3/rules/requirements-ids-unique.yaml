@@ -1,0 +1,13 @@
+id: requirements/ids-unique
+kind: deterministic
+phase: [inception]
+checkpoint: exit
+substrate: [artifacts]
+check: artifact.ids_duplicated
+params:
+  artifact: requirements.md
+principle: >
+  Identifiers are the anchor for traceability. A duplicate ID silently
+  breaks every downstream reference to it.
+severity: error
+fix: none

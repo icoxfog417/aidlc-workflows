@@ -1,0 +1,16 @@
+id: approval/human-present
+kind: deterministic
+phase: [any]
+checkpoint: any
+substrate: [ledger]
+check: ledger.event_without_preceding
+params:
+  event: GATE_APPROVED
+  preceded_by: HUMAN_TURN
+  reset_on: [GATE_APPROVED, GATE_REJECTED, STAGE_STARTED, WORKFLOW_STARTED]
+principle: >
+  An approval is only an approval if a person actually acted. A fabricated
+  approval cannot be un-approved, so this is one of the few irreversible
+  acts that justifies blocking.
+severity: error
+fix: none

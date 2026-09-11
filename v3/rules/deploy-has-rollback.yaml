@@ -1,0 +1,13 @@
+id: deploy/has-rollback
+kind: deterministic
+phase: [operation]
+checkpoint: exit
+substrate: [artifacts]
+check: artifact.section_absent
+params:
+  artifact: deployment.md
+  heading: Rollback
+principle: >
+  Anything that reaches production states how it comes back out.
+severity: warn
+fix: suggest

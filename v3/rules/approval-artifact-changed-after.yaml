@@ -1,0 +1,12 @@
+id: approval/artifact-changed-after
+kind: deterministic
+phase: [any]
+checkpoint: any
+substrate: [ledger]
+check: ledger.artifact_changed_after_approval
+params: {}
+principle: >
+  What a person approved should be what ships. If the artifact moved after
+  the gate, say so; do not freeze the write.
+severity: warn
+fix: none

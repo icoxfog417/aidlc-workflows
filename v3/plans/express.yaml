@@ -1,0 +1,50 @@
+name: express
+description: >
+  Lightest run: requirements to deploy, no design pass, no reviewers.
+  Mirrors the v2 `express` scope. This is a SUGGESTED ORDER, not a schema.
+  Steps may be reordered, merged or skipped; the reason is recorded in the
+  ledger. No step declares documents it must produce, so no step can
+  deadlock because a document does not apply.
+steps:
+  - id: intent
+    title: Capture intent
+    checkpoint: exit
+    questions:
+      - What problem are we solving, and for whom?
+      - What does "done" look like, observably?
+      - What is explicitly out of scope?
+  - id: reverse-engineering
+    title: Understand what exists
+    checkpoint: exit
+    when: brownfield
+    questions:
+      - What does the current system do in the area we are changing?
+      - What constraints does the existing code impose?
+  - id: requirements
+    title: State the requirements
+    checkpoint: exit
+    gate: true
+    questions:
+      - What must be true for each requirement to be considered met?
+      - Which requirements are testable, and how?
+      - What did we assume rather than confirm?
+  - id: code-generation
+    title: Plan, then implement
+    checkpoint: exit
+    gate: true
+    questions:
+      - What is the implementation plan, before any code is written?
+      - Which requirement does each change serve?
+  - id: build-and-test
+    title: Verify
+    checkpoint: exit
+    questions:
+      - Does each requirement have a test that would fail without the change?
+      - Does the existing suite still pass?
+  - id: deploy
+    title: Ship and observe
+    checkpoint: exit
+    when: deployable
+    questions:
+      - How does this reach production, and how does it roll back?
+      - What signal tells us it is working?

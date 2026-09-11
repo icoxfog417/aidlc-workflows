@@ -1,0 +1,15 @@
+id: plan/precedes-code
+kind: deterministic
+phase: [construction]
+checkpoint: exit
+substrate: [trace]
+check: trace.write_without_prior_read
+params:
+  write_match: "^(src|lib|app)/"
+  read_match: "(code-generation-plan|requirements)\.md$"
+principle: >
+  Implementation follows a plan the team can see. This reads the execution
+  trace rather than a declared receipt, because a byproduct of doing the
+  work is far more expensive to fabricate than a claim about it.
+severity: warn
+fix: none

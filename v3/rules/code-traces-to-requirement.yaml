@@ -1,0 +1,15 @@
+id: code/traces-to-requirement
+kind: deterministic
+phase: [construction]
+checkpoint: exit
+substrate: [artifacts]
+check: crossref.ids_uncovered
+params:
+  from: requirements.md
+  to: traceability.md
+principle: >
+  Every requirement can be followed to the change that implements it.
+  Traceability keys on content IDs, never on file paths, so restructuring
+  the documents never breaks the chain.
+severity: warn
+fix: none

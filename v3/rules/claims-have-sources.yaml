@@ -1,0 +1,16 @@
+id: claims/have-sources
+kind: deterministic
+phase: [ideation, inception]
+checkpoint: exit
+substrate: [artifacts]
+check: artifact.items_missing_marker
+params:
+  artifact: requirements.md
+  label: source tag
+  markers:
+    - "\[(desc|scope|assumption|Q[0-9]+|src:[^]]+)\]"
+principle: >
+  A claim traces to something the team actually consulted: the initial
+  description, the selected scope, an answered question, or a named source.
+severity: warn
+fix: none

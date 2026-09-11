@@ -1,0 +1,17 @@
+id: requirements/has-acceptance-criteria
+kind: deterministic
+phase: [inception]
+checkpoint: exit
+substrate: [artifacts]
+check: artifact.items_missing_marker
+params:
+  artifact: requirements.md
+  label: acceptance criterion
+  markers:
+    - "acceptance"
+    - "given .* when .* then"
+    - "AC-[0-9]"
+principle: >
+  Each requirement states an observable condition a test could check.
+severity: error
+fix: suggest

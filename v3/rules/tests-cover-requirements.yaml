@@ -1,0 +1,15 @@
+id: tests/cover-requirements
+kind: deterministic
+phase: [construction]
+checkpoint: exit
+substrate: [artifacts]
+check: crossref.ids_uncovered
+params:
+  from: requirements.md
+  to: test-results.md
+principle: >
+  Each requirement has a test that would fail without the change. The
+  express posture asks for a happy-path floor per requirement, not coverage
+  percentages.
+severity: warn
+fix: none
