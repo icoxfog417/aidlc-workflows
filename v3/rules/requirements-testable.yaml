@@ -8,7 +8,7 @@ params:
   artifact: requirements.md
   label: observable condition
   markers:
-    - "must (return|reject|display|persist|respond|emit|fail)"
+    - "given .*, *when .*, *then"
     - "within [0-9]+ *(ms|s|seconds|minutes)"
     - "returns? (a |an )?[0-9]{3}"
 principle: >

@@ -149,9 +149,10 @@ function cmdCheck(root: string, args: string[]): number {
   const ws = loadWorkspace(root);
   const rules = loadRules(RULES_DIR);
   const checkpoint = flag(args, "gate");
+  const phase = flag(args, "phase");
   const mode = (flag(args, "judge", "stub") as TriageMode);
 
-  const { findings: raised } = raiseAll(ws, rules, checkpoint);
+  const { findings: raised } = raiseAll(ws, rules, checkpoint, phase);
   const triaged = triage(raised, mode);
 
   const sPath = suppressionsPath(root);
@@ -222,6 +223,7 @@ const USAGE = `aidlc3 ${VERSION} — rules over records
 
 check flags:
   --gate <checkpoint>         only rules for this checkpoint
+  --phase <name>              only rules tagged for this phase
   --judge none|stub|model     triage mode (default: stub)
   --suppress-all              baseline existing findings
   --prune                     drop suppressions no longer needed

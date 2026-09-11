@@ -79,7 +79,7 @@ const PRIMITIVES: Record<string, Primitive> = {
     if (!a) return [];
     const markers = (p.markers as string[]) ?? [];
     return itemsOf(a.text)
-      .filter((it) => !markers.some((m) => safeRe(m, "i", rule.id)?.test(it.body) ?? false))
+      .filter((it) => !markers.some((m) => safeRe(m, "is", rule.id)?.test(it.body) ?? false))
       .map((it) => ({ rule, where: `${a.rel}:${it.line}`, detail: `${it.id} has no ${p.label ?? "required marker"}`, anchor: it.body.slice(0, 400) }));
   },
 
@@ -210,13 +210,21 @@ export function effectiveSeverity(rule: Rule, ws: Workspace): Severity {
 
 // ---------- stage 1: raise ----------
 
-export function raiseAll(ws: Workspace, rules: Rule[], checkpoint?: string): { findings: Finding[]; skipped: number } {
+export function raiseAll(
+  ws: Workspace,
+  rules: Rule[],
+  checkpoint?: string,
+  phase?: string,
+): { findings: Finding[]; skipped: number } {
   const findings: Finding[] = [];
   let skipped = 0;
   for (const rule of rules) {
     const sev = effectiveSeverity(rule, ws);
     if (sev === "off") { skipped++; continue; }
     if (checkpoint && rule.checkpoint !== "any" && rule.checkpoint !== checkpoint) { skipped++; continue; }
+    // A rule tagged for a later phase must not fire at an earlier gate:
+    // "no traceability yet" is progress, not a defect.
+    if (phase && rule.phase.length > 0 && !rule.phase.includes("any") && !rule.phase.includes(phase)) { skipped++; continue; }
     const prim = PRIMITIVES[rule.check];
     if (!prim) { skipped++; continue; }
     for (const r of prim(ws, rule.params, rule)) findings.push({ ...r, severity: sev });

@@ -182,10 +182,15 @@ export const FIXTURES: (Fixture & { mutate?: Mutation })[] = [
     name: "vague-requirement", expect: "requirements/testable",
     note: "FR-3 was rewritten as a goal rather than an observable condition",
     mutate: {
-      requirements: (s) => s.replace(
-        "The list endpoint must respond within 500 ms at p95. [Q1]",
-        "The list endpoint should feel fast for users. [Q1]",
-      ),
+      requirements: (s) => s
+        .replace(
+          "The list endpoint must respond within 500 ms at p95. [Q1]",
+          "The list endpoint should feel fast for users. [Q1]",
+        )
+        .replace(
+          "  - Acceptance: given 1000 stored todos, when GET /todos, then p95 latency is under 500 ms.",
+          "  - Acceptance: the list feels responsive.",
+        ),
     },
   },
   {
