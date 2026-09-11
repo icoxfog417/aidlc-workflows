@@ -11,14 +11,14 @@
 // `check` is invoked at checkpoints. Nothing here runs on a tool call, so
 // there is no per-tool-call overhead and nothing that can refuse mid-work.
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   appendLedger, appendSpan, artifactsDir, ledgerPath, loadWorkspace,
   type LedgerEvent, type Span,
 } from "./engine/workspace.ts";
-import { loadRules, raiseAll, triage, effectiveSeverity, primitiveNames, type TriageMode } from "./engine/rules.ts";
+import { loadRules, raiseAll, triage, effectiveSeverity, primitiveNames, judgmentRequests, applyVerdicts, type TriageMode, type Verdicts } from "./engine/rules.ts";
 import * as S from "./engine/suppress.ts";
 import { renderFindings, sarif } from "./engine/report.ts";
 import { loadPlan, nextStep, progress } from "./engine/plan.ts";
@@ -153,7 +153,21 @@ function cmdCheck(root: string, args: string[]): number {
   const mode = (flag(args, "judge", "stub") as TriageMode);
 
   const { findings: raised } = raiseAll(ws, rules, checkpoint, phase);
-  const triaged = triage(raised, mode);
+
+  // External judge protocol: emit the raises an independent judge should
+  // adjudicate, then read its verdicts back. Keeping the judge out of process
+  // is what lets it run with no context from whoever authored the rules.
+  const emitTo = flag(args, "emit-judgments");
+  if (emitTo) {
+    const reqs = judgmentRequests(raised);
+    writeFileSync(resolve(root, emitTo), JSON.stringify({ requests: reqs }, null, 2));
+    console.log(`Wrote ${reqs.length} judgment request(s) to ${emitTo}.`);
+    return 0;
+  }
+  const verdictsIn = flag(args, "judgments");
+  const triaged = verdictsIn
+    ? applyVerdicts(raised, (JSON.parse(readFileSync(resolve(root, verdictsIn), "utf8")).verdicts ?? {}) as Verdicts)
+    : triage(raised, mode);
 
   const sPath = suppressionsPath(root);
 
@@ -224,7 +238,9 @@ const USAGE = `aidlc3 ${VERSION} — rules over records
 check flags:
   --gate <checkpoint>         only rules for this checkpoint
   --phase <name>              only rules tagged for this phase
-  --judge none|stub|model     triage mode (default: stub)
+  --judge none|stub|model     built-in triage mode (default: stub)
+  --emit-judgments <path>     write raises for an external judge
+  --judgments <path>          apply an external judge's verdicts
   --suppress-all              baseline existing findings
   --prune                     drop suppressions no longer needed
   --sarif <path>              also write SARIF

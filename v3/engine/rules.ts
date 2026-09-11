@@ -242,6 +242,39 @@ export function raiseAll(
 
 export type TriageMode = "none" | "stub" | "model";
 
+/** A stable id for one raise, so an external judge can answer it by name. */
+export function raiseId(f: Finding): string {
+  return `${f.rule.id}|${f.where}`;
+}
+
+export type JudgmentRequest = {
+  id: string; rule: string; principle: string; where: string;
+  detail: string; excerpt?: string;
+};
+
+/** Findings that carry a deterministic anchor an external judge can adjudicate. */
+export function judgmentRequests(findings: Finding[]): JudgmentRequest[] {
+  return findings
+    .filter((f) => f.rule.kind === "judgment" || f.anchor)
+    .map((f) => ({
+      id: raiseId(f), rule: f.rule.id, principle: f.rule.principle,
+      where: f.where, detail: f.detail, excerpt: f.anchor,
+    }));
+}
+
+export type Verdicts = Record<string, { verdict: "confirmed" | "dismissed"; confidence: number; note: string }>;
+
+/** Apply externally-produced verdicts. A verdict can only DISMISS a raise —
+ *  an unanswered or malformed one stays confirmed, so a judge that fails or
+ *  is absent degrades to the deterministic result rather than losing it. */
+export function applyVerdicts(findings: Finding[], verdicts: Verdicts): Finding[] {
+  return findings.map((f) => {
+    const v = verdicts[raiseId(f)];
+    if (!v || (v.verdict !== "confirmed" && v.verdict !== "dismissed")) return f;
+    return { ...f, triage: { verdict: v.verdict, confidence: Number(v.confidence) || 0, note: String(v.note ?? "") } };
+  });
+}
+
 export function triage(findings: Finding[], mode: TriageMode): Finding[] {
   if (mode === "none") return findings;
   return findings.map((f) => {
