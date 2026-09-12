@@ -160,3 +160,93 @@ In the measurement apparatus itself:
    `FR-2` and inflated v3's recall from 14% to 29%. The bug favoured the
    system its author wrote. Fixed to word-bounded matching — and a reminder
    that the scorer needs the same scrutiny as the thing it scores.
+
+
+---
+
+## Result: Experiment C, concerns vs rules (2026-09-12)
+
+Same document, same ground truth. Four review conditions, each a fresh-context
+subagent that saw only the prompt, the document, and (where applicable)
+`v3/concerns/baseline.yaml` — never the defect list.
+
+```
+  condition                       recall    caught
+  ------------------------------------------------------------------
+  v2 sensors (28 raised)          0/7 (  0%)  --
+  v3 rules (6 raised)             1/7 ( 14%)  D1
+  reviewer, no concerns           7/7 (100%)  D1..D7
+  concerns + SMALL model          5/7 ( 71%)  D1, D2, D3, D6, D7
+  concerns + default model        7/7 (100%)  D1..D7
+```
+
+**A small model with ~250 words of concerns beats the 962-line rule engine by
+5x.** Both of the small model's misses appeared in its own concern walkthrough
+(it flagged the `"current day"` ambiguity and the availability-flag source) but
+were not promoted into its defect table, so 5/7 understates it.
+
+### Priming control
+
+The concern-guided reviewers found MORE than the unguided one. Those extras are
+either real defects the first reviewer missed, or artifacts of being told what
+to look for — a concern list that inflates every review into 13 findings would
+just be v2's false-positive storm in better prose. A skeptical adjudicator was
+given the six novel claims and told that absence alone is not a defect, only
+absence with consequences at this scope:
+
+| claim | verdict |
+|---|---|
+| name/phone format rules | OVERREACH |
+| idempotency / duplicate submission | OVERREACH |
+| boundary inclusivity of 07:00 / 15:00 | OVERREACH |
+| no quantity or per-slot capacity limits | REAL, minor |
+| no defined submission outcome for the customer | REAL, minor |
+| **order `status` never transitions beyond `received`** | **REAL, MATERIAL** |
+
+Three of six were overreach — a real noise cost, and exactly the priming risk.
+But the triage stage removed all three, which is the funnel doing the job the
+stub could not.
+
+### The ground truth was wrong
+
+`status` never transitioning past `received` is a **material** defect: FR-6's
+staff list is a read-only pile with no way to mark an order fulfilled, so staff
+fall back to paper on day one. The unguided reviewer missed it. The
+concern-guided default reviewer found it.
+
+So the corrected ground truth is **8 material defects, not 7**, and the
+concern-guided reviewer exceeded the unguided senior rather than merely
+matching it — by being systematic where a human is associative.
+
+Revised, against 8:
+
+```
+  v2 sensors               0/8    precision   0%  (0 of 28 confirmed)
+  v3 rules                 1/8    precision  33%  (2 of 6 signal)
+  reviewer, no concerns    7/8
+  concerns + default       8/8    precision  62% material-strict, 85% real-at-any-severity
+```
+
+Concerns win on recall AND precision. **Single-reviewer ground truth is not
+ground truth** — a methodological lesson this scenario paid for.
+
+### What this revises in the design
+
+1. The Semgrep anchor discipline is right for precision and wrong for recall.
+   The concern pass must be its own **unanchored** tier: nothing deterministic
+   points at "the staff list has no auth".
+2. Three tiers, not two — cheap deterministic rules for mechanical facts
+   (can be `error`), concern-driven open review for absence (`warn` only,
+   never law), skeptical triage for precision, then the human.
+3. Triage must be **skeptical by construction**. The instruction that worked
+   was "absence alone is not a defect; judge absence with consequences at this
+   scope". A credulous triage confirms everything, which is what the stub did.
+
+### Threat to validity
+
+The concern list was authored with these seven defects known. The frames are
+standard and domain-independent (STRIDE, CRUD/data-lifecycle, input-domain,
+specification quality) but selecting them was informed. This scenario cannot
+distinguish the idea working from overfitting. `concerns/baseline.yaml` is now
+frozen in git; the control is Scenario 2, a different domain, scored without
+touching it.

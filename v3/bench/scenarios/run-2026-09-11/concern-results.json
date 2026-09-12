@@ -1,0 +1,10 @@
+{
+  "note": "Strict scoring: only entries in each reviewer's DEFECTS list count. Walkthrough mentions do not.",
+  "conditions": {
+    "v2-sensors":        {"D1":0,"D2":0,"D3":0,"D4":0,"D5":0,"D6":0,"D7":0},
+    "v3-rules":          {"D1":1,"D2":0,"D3":0,"D4":0,"D5":0,"D6":0,"D7":0},
+    "unguided-reviewer": {"D1":1,"D2":1,"D3":1,"D4":1,"D5":1,"D6":1,"D7":1},
+    "concerns-small":    {"D1":1,"D2":1,"D3":1,"D4":0,"D5":0,"D6":1,"D7":1},
+    "concerns-default":  {"D1":1,"D2":1,"D3":1,"D4":1,"D5":1,"D6":1,"D7":1}
+  }
+}
