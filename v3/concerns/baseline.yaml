@@ -1,0 +1,69 @@
+# Preservation concerns — what must hold, whatever is being built.
+#
+# A rule says what must be PRESENT. A concern says what must be PRESERVED.
+# The difference matters: a form-rule can only find what is misshapen, while a
+# concern generates a question, and the question finds what is ABSENT. Absence
+# is where the expensive defects live.
+#
+# These are derived from standard analysis frames, deliberately NOT from any
+# observed defect list:
+#   - STRIDE (information disclosure, tampering, elevation of privilege)
+#   - CRUD / data-lifecycle analysis (every read has a writer)
+#   - input-domain analysis (every input has a valid range)
+#   - specification-quality practice (ambiguity, verifiability)
+#
+# Each concern is used TWICE, which is the whole economy of the idea:
+#   at construction — `ask` becomes a question the agent answers while building
+#   at review       — `ask` becomes the reviewer's standing worry
+# Nothing about the agent's reasoning is re-implemented in code. The concern
+# supplies the premise the agent lacks and lets it do the reasoning.
+
+concerns:
+  - id: disclosure
+    preserve: Personal or confidential data is never visible to a party not entitled to it.
+    ask: >
+      For every surface that displays or returns data — whose data is it, who
+      can reach that surface, and what stops anyone else from reaching it?
+
+  - id: client-trust
+    preserve: Correctness never depends on the client behaving.
+    ask: >
+      For every input the system accepts — what happens if it is replayed,
+      altered, or fabricated by someone bypassing the interface?
+
+  - id: state-ownership
+    preserve: Every piece of state the system reads has a defined way to be written.
+    ask: >
+      For every flag, status, price or reference the system reads — who sets
+      it, when, and through what interface?
+
+  - id: input-domain
+    preserve: Every accepted input has a defined valid range; out-of-range input is rejected.
+    ask: >
+      For every input — which values are valid, and what happens exactly at
+      and beyond the boundary?
+
+  - id: commitment
+    preserve: The system never accepts a commitment it cannot honour.
+    ask: >
+      For everything the system promises a user — can it actually be
+      fulfilled, by whom, and within what window?
+
+  - id: record-completeness
+    preserve: A record of a transaction is complete and fixed at the moment it is made.
+    ask: >
+      For every stored transaction — does it capture everything needed to
+      honour and audit it later, independently of data that may change
+      afterwards?
+
+  - id: ambiguity
+    preserve: A term carrying more than one reasonable reading is pinned to one.
+    ask: >
+      Which words here could two competent implementers read differently, and
+      would they build different things as a result?
+
+  - id: verifiability
+    preserve: Each requirement can be objectively judged met or not met.
+    ask: >
+      For every requirement — what single observation would settle whether it
+      holds?
