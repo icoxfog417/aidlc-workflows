@@ -250,3 +250,93 @@ specification quality) but selecting them was informed. This scenario cannot
 distinguish the idea working from overfitting. `concerns/baseline.yaml` is now
 frozen in git; the control is Scenario 2, a different domain, scored without
 touching it.
+
+
+---
+
+## Result: Experiment D — v2's knowledge layer (2026-09-14)
+
+Experiments A and C tested v2's **sensors**. That was the wrong half of v2.
+v2's actual mechanism for capturing necessary considerations is 14 agent
+personas, each ending in a `## Key Principles` section of about six lines,
+backed by 59 knowledge files. None of it was exercised.
+
+Two further conditions, same document, same fresh-context protocol. Each was
+given ONLY a principle block extracted verbatim from v2's personas.
+
+```
+  condition                         recall      missed
+  ------------------------------------------------------------------------
+  v2 sensors (what express runs)    0/8 (  0%)   all
+  v3 rules                          1/8 ( 12%)   D2..D8
+  concerns + small model            5/8 ( 62%)   D4, D5, D8
+  concerns + default model          8/8 (100%)   --
+  v2 product principles ONLY        6/8 ( 75%)   D5, D8
+  v2 product+security+compliance    7/8 ( 88%)   D5
+```
+
+New MATERIAL defects found beyond the eight-defect ground truth:
+
+| condition | new finding |
+|---|---|
+| product only | order total never defined as server-computed |
+| + security + compliance | customer PII has no classification, retention or deletion path |
+| + security + compliance | **allergen disclosure — a regulatory gap for distance selling** |
+| + security + compliance | order submission is an unauthenticated public write with no rate limit |
+
+### Three corrections to earlier conclusions in this file
+
+1. **v2's knowledge layer is its best asset, and it was never tested.** Six
+   product principles reach 6/8 — better than an 8-concern list with a small
+   model, and close to an unguided senior reviewer. The claim that v2 "caught
+   0 of 7" is true only of its sensors.
+
+2. **The routing hypothesis was half right.** Product principles alone DID
+   catch the staff-list auth gap, so it is not the case that security defects
+   need the security agent. What the specialist sets add is a different CLASS
+   of defect — regulatory, data-lifecycle, abuse — that generalist review does
+   not reach at all. The allergen finding is the clearest case: the document
+   deliberately defers allergens with a plausible justification, and only the
+   compliance principles noticed the deferral may be unlawful for online
+   ordering.
+
+3. **What actually fails in express is that no review runs.** The `express`
+   scope sets `review_cap: none`, which disables reviewer dispatch entirely.
+   `requirements-analysis` declares `reviewer: aidlc-product-lead-agent` and
+   `review_class: advisory`, and the scope lowers that to none. So v2 authors
+   the document with excellent principles, then checks it with three form
+   sensors and nothing else. The knowledge exists, the reviewer mechanism
+   exists, and the scope switches it off.
+
+### The framework-compression answer
+
+v2 already performed the conversion from published framework to usable
+knowledge, and the ratio is the lesson:
+
+| | |
+|---|---|
+| OWASP ASVS 5.0 | 345 clauses |
+| v2 devsecops agent | **6 principles** |
+| this file's concern set | 8 concerns |
+
+**~345 into 6.** Reflecting a framework into lint rules would produce hundreds
+of predicates with the recall of a form-checker; compressing it into six
+sentences produces something that finds regulatory gaps. Across 14 personas
+v2 holds roughly 84 principles compressing whole disciplines, and they work.
+
+Two things to fix rather than rewrite:
+
+- **Route by artifact, not by role.** Security and compliance principles never
+  reach a requirements document in express, because their agents are bound to
+  later stages. Cross-cutting concerns are not sequential specialities.
+- **Add provenance.** v2's principles cite nothing, so a reader cannot check
+  them against ASVS, compute coverage, or tell a house rule from a standard.
+  Annotate the principles that already exist; do not author new ones.
+
+### Confound
+
+In real v2 the product agent AUTHORS the requirements; here it reviewed a
+document it had not written. Self-review is materially weaker, so condition
+"product only" overstates what a single-agent v2 step would catch. v2's own
+two-agent structure (author + `product-lead-agent` reviewer) is the right
+shape; express simply disables the second half.
